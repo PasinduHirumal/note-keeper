@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note Keeper </title>
+    <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-image: url('https://cdn.pixabay.com/photo/2015/09/05/23/02/notepad-926046_960_720.jpg');
+                background-size: cover;
+                background-position: center;
+                animation: fadeInBackground 2s ease-in-out;
+            }
+            @keyframes fadeInBackground {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+            .container {
+                display: flex;
+                justify-content: space-around;
+                align-items: flex-start;
+                max-width: 1200px;
+                margin: 20px auto;
+                padding: 20px;
+                border-radius: 10px;
+                background-color: rgba(255, 255, 255, 0.8);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                animation: fadeIn 0.5s ease-out;
+            }
+            .note-section {
+                width: 45%;
+                transition: all 0.5s ease;
+            }
+            .note-section:last-child {
+                margin-left: 20px;
+            }
+            h1 {
+                color: #333333;
+                text-align: center;
+                margin-bottom: 20px;
+                transition: color 0.5s ease;
+            }
+            input[type="text"],
+            textarea {
+                width: calc(100% - 20px);
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 16px;
+                resize: vertical;
+            }
+            textarea{
+                min-height: 330px;
+            }
+            button.clear-all, button.save {
+                display: block;
+                width: calc(100% - 20px);
+                padding: 12px 0;
+                margin-top: 10px;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s ease, transform 0.3s ease;
+            }
+            button.view-all, button.filter-note{
+                display: block;
+                width: calc(50% - 20px);
+                padding: 12px 0;
+                margin-top: 10px;
+                margin-right: 20px;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s ease, transform 0.3s ease;
+            }
+            button.delete, button.clear-all-notes{
+                display: block;
+                width: calc(50% - 20px);
+                padding: 12px 0;
+                margin-top: 10px;
+                margin-right: 20px;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s ease, transform 0.3s ease;
+            }
+            .mic-button-1 {
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 18px;
+                color: #333;
+            }
+            .mic-button-1:hover {
+                color: #666;
+            }
+            .mic-button-2 {
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-100%);
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 18px;
+                color: #333;
+            }
+            .mic-button-2:hover {
+                color: #666;
+            }
+            label {
+                position: relative;
+            }
+            .save{
+                background-color: #4CAF50;
+                color: #ffffff;
+            }
+            .save:hover{
+                background-color: #45a049;
+                color: #ffffff;
+                transform: translateY(-5px);
+            }
+            .view-all, .filter-note{
+                background-color: #007bff;
+                color: #ffffff;
+                float: left;
+            }
+            
+            .view-all:hover, .filter-note:hover{
+                background-color: #0069d9;
+                color: #ffffff;
+                transform: translateY(-5px);
+            }
+            .delete, .clear-all-notes {
+                margin-top: 10px;
+                background-color: #dc3545;
+                color: #ffffff;
+                float: left;
+            }
+            .delete:hover, .clear-all-notes:hover {
+                background-color: #c82333;
+                transform: translateY(-5px);
+            }
+            .clear-all{
+                margin-top: 10px;
+                background-color: #dc3545;
+                color: #ffffff;
+            }
+            .clear-all:hover{
+                background-color: #c82333;
+                transform: translateY(-5px);
+            }
+            .note-list {
+                max-height: 400px;
+                overflow-y: auto;
+                padding: 10px;
+                border-radius: 5px;
+                background-color: #f7f7f7;
+                transition: all 0.5s ease;
+            }
+            .note-item {
+                border: 1px solid #ccc;
+                padding: 10px;
+                margin-bottom: 10px;
+                border-radius: 5px;
+                background-color: #fff;
+                transition: transform 0.5s ease, box-shadow 0.5s ease;
+            }
+            .note-item:hover {
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                transform: scale(1.02);
+            }
+            .search-bar {
+                margin-bottom: 20px;
+                transition: all 0.5s ease;
+            }
+            .note-saved {
+                text-align: center;
+                margin-top: 10px;
+                color: #28a745;
+                font-size: 14px;
+                display: none;
+            }
+            @media only screen and (max-width: 768px) {
+                .container {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                .note-section {
+                    width: 100%;
+                    margin-left: 0;
+                    margin-bottom: 20px;
+                }
+                .note-section:last-child {
+                    margin-left: 0;
+                }
+            }
+            @media only screen and (max-height: 600px) {
+                .note-list {
+                    max-height: 300px;
+                }
+                .note-item {
+                    margin-bottom: 5px;
+                }
+            }
+            @media only screen and (max-width: 600px) {
+                .note-section {
+                    padding: 10px;
+                }
+                input[type="text"],
+                textarea {
+                    padding: 8px;
+                    font-size: 14px;
+                }
+                button {
+                    padding: 10px 0;
+                    font-size: 14px;
+                }
+                .note-item {
+                    padding: 8px;
+                    margin-bottom: 5px;
+                }
+            }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="note-section">
+        <div>
+            <h1>Note Keeper</h1>
+            <label for="title">
+                <input type="text" id="title" placeholder="Title">
+                <button class="mic-button-1" onclick="readTitle()">🔊</button>
+            </label>
+            <label for="content">
+                <textarea id="content" placeholder="Content" rows="16"></textarea>
+                <button class="mic-button-2" onclick="readContent()">🔊</button>
+            </label>
+            <div id="noteSaved" class="note-saved">Note added successfully!</div>
+            <button class="save" onclick="saveNote()">Save</button>
+            <button class="clear-all" onclick="clearNote()">Clear</button>
+        </div>
+    </div>
+    <div class="note-section">
+        <div class="search-bar">
+            <label for="search"></label>
+            <input type="text" id="search" placeholder="Search by title" oninput="searchNotes()">
+        </div>
+        <div id="noteList" class="note-list"></div>
+        <div>
+            <button class="view-all" onclick="viewAllNotes()">View All Notes</button>
+            <button class="filter-note" onclick="filterByDate()">Filter Notes by Date</button>
+            <button class="delete" onclick="deleteSelectedNotes()">Delete Selected</button>
+            <button class="clear-all-notes" onclick="clearAllNotes()">Clear All Notes</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function viewAllNotes() {
+    viewNotes();
+    }
+
+    function saveNote() {
+        const noteTitle = document.getElementById('title').value;
+        const noteContent = document.getElementById('content').value;
+        const timestamp = new Date().toLocaleString();
+
+        if(noteTitle.trim() === ''){
+            alert("Please provide a title for the note.");
+            return;
+        }
+
+        const notes = JSON.parse(localStorage.getItem('notes')) || [];
+        const editIndex = parseInt(document.getElementById('editIndex').value);
+
+        const newNote = { title: noteTitle, content: noteContent, timestamp: timestamp };
+
+        if (editIndex !== -1) {
+            notes[editIndex] = newNote;
+        } else {
+            notes.push(newNote);
+        }
+
+        notes.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+        localStorage.setItem('notes', JSON.stringify(notes));
+        document.getElementById('noteSaved').style.display = 'block';
+        setTimeout(function() {
+            document.getElementById('noteSaved').style.display = 'none';
+        }, 2000);
+        viewNotes();
+        clearNote();
+    }
+
+    function clearNote() {
+        document.getElementById('title').value = '';
+        document.getElementById('content').value = '';
+        document.getElementById('content').focus();
+        document.getElementById('editIndex').value = -1;
+    }
+
+    function deleteSelectedNotes() {
+        const checkboxes = document.querySelectorAll('.note-checkbox:checked');
+        if (checkboxes.length === 0) {
+            alert('Please select at least one note to delete.');
+            return;
+        }
+        if (confirm("Are you sure you want to delete selected notes?")) {
+            const notes = JSON.parse(localStorage.getItem('notes')) || [];
+            checkboxes.forEach(function(checkbox) {
+                const noteIndex = checkbox.dataset.index;
+                notes.splice(noteIndex, 1);
+            });
+            localStorage.setItem('notes', JSON.stringify(notes));
+            viewNotes();
+        }
+    }
+
+    function viewNotes() {
+        const notes = JSON.parse(localStorage.getItem('notes')) || [];
+        const noteList = document.getElementById('noteList');
+        noteList.innerHTML = '';
+        if (notes.length > 0) {
+            notes.forEach(function(note, index) {
+                const noteItem = document.createElement('div');
+                noteItem.classList.add('note-item');
+                noteItem.innerHTML = `
+                        <input type="checkbox" class="note-checkbox" data-index="${index}">
+                        <strong>Title:</strong> ${note.title}<br>
+                        <strong>Content:</strong> ${note.content}<br>
+                        <strong>Timestamp:</strong> ${note.timestamp}<br><br>
+                    `;
+                noteItem.onclick = function() {
+                    document.getElementById('title').value = note.title;
+                    document.getElementById('content').value = note.content;
+                    document.getElementById('editIndex').value = index;
+                };
+                noteList.appendChild(noteItem);
+            });
+        } else {
+            alert('No notes found!');
+        }
+    }
+
+    function readTitle() {
+        const title = document.getElementById('title').value;
+        if (title.trim() === '') {
+            alert("Please enter a title first.");
+            return;
+        }
+        const utterance = new SpeechSynthesisUtterance();
+        utterance.text = title;
+        speechSynthesis.speak(utterance);
+    }
+
+    function readContent() {
+        const content = document.getElementById('content').value;
+        if (content.trim() === '') {
+            alert("Please enter some content first.");
+            return;
+        }
+        const utterance = new SpeechSynthesisUtterance();
+        utterance.text = content;
+        speechSynthesis.speak(utterance);
+    }
+
+    function clearAllNotes() {
+        if (confirm("Are you sure you want to clear all notes?")) {
+            localStorage.removeItem('notes');
+            alert('All notes cleared successfully!');
+            document.getElementById('noteList').innerHTML = '';
+        }
+    }
+
+    function searchNotes() {
+        const searchInput = document.getElementById('search').value.toLowerCase();
+        const notes = JSON.parse(localStorage.getItem('notes')) || [];
+        const filteredNotes = notes.filter(note => note.title.toLowerCase().includes(searchInput));
+        const noteList = document.getElementById('noteList');
+        noteList.innerHTML = '';
+        if (filteredNotes.length > 0) {
+            filteredNotes.forEach(function(note, index) {
+                const noteItem = document.createElement('div');
+                noteItem.classList.add('note-item');
+                noteItem.innerHTML = `
+                        <input type="checkbox" class="note-checkbox" data-index="${index}">
+                        <strong>Title:</strong> ${note.title}<br>
+                        <strong>Content:</strong> ${note.content}<br>
+                        <strong>Timestamp:</strong> ${note.timestamp}<br><br>
+                    `;
+                noteList.appendChild(noteItem);
+            });
+        } else {
+            alert('No matching notes found!');
+        }
+    }
+    function filterByDate() {
+        const startDate = prompt("Enter start date (YYYY-MM-DD):");
+        const endDate = prompt("Enter end date (YYYY-MM-DD):");
+
+        if (!startDate || !endDate) {
+            alert("Please enter both start and end dates.");
+            return;
+        }
+
+        const notes = JSON.parse(localStorage.getItem('notes')) || [];
+        const filteredNotes = notes.filter(note => {
+            const noteDate = new Date(note.timestamp).getTime();
+            const startDateMillis = new Date(startDate).getTime();
+            const endDateMillis = new Date(endDate).getTime() + (24 * 60 * 60 * 1000);
+
+            return noteDate >= startDateMillis && noteDate <= endDateMillis;
+        });
+
+        const noteList = document.getElementById('noteList');
+        noteList.innerHTML = '';
+
+        if (filteredNotes.length > 0) {
+            filteredNotes.forEach(function(note, index) {
+                const noteItem = document.createElement('div');
+                noteItem.classList.add('note-item');
+                noteItem.innerHTML = `
+                    <input type="checkbox" class="note-checkbox" data-index="${index}">
+                    <strong>Title:</strong> ${note.title}<br>
+                    <strong>Content:</strong> ${note.content}<br>
+                    <strong>Timestamp:</strong> ${note.timestamp}<br><br>
+                `;
+                noteList.appendChild(noteItem);
+            });
+        } else {
+            alert('No notes found between the specified dates.');
+        }
+    }
+    window.onload = function() {
+        viewNotes();
+    };
+</script>
+
+<input type="hidden" id="editIndex" value="-1">
+
+</body>
+</html>

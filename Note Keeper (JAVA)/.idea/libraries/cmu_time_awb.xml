@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="cmu_time_awb">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../Jar file/cmu_time_awb.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Jar file/cmu_us_kal.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Jar file/en_us.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Jar file/freetts-jsapi10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Jar file/freetts.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Jar file/mbrola.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Jar file/mysql-connector-java-8.0.28.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Jar file/rs2xml.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../Jar file/rs2xml.jar!/src" />
+    </SOURCES>
+  </library>
+</component>

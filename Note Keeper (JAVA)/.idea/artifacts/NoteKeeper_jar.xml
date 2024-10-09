@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="NoteKeeper:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/NoteKeeper_jar</output-path>
+    <root id="archive" name="NoteKeeper.jar">
+      <element id="module-output" name="NoteKeeper" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/cmu_time_awb.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/freetts.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/freetts-jsapi10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/mysql-connector-java-8.0.28.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/en_us.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/cmu_us_kal.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/jsapi.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/mbrola.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
